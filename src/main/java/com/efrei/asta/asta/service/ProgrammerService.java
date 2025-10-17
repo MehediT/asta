@@ -63,7 +63,6 @@ public class ProgrammerService {
     // 4.5 - Méthode pour ajouter un nouveau programmeur
     public Programmer save(Programmer newProgrammer) {
         // L'ID sera généré automatiquement par la base de données
-        newProgrammer.setIdProgrammeur(null);
         return programmerRepository.save(newProgrammer);
     }
 }

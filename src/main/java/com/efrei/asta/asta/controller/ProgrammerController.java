@@ -59,7 +59,7 @@ public class ProgrammerController {
         try {
             Programmer savedProgrammer = programmerService.save(programmer);
             redirectAttributes.addFlashAttribute("success", "Programmeur créé avec succès !");
-            return "redirect:/programmer/" + savedProgrammer.getIdProgrammeur();
+            return "redirect:/programmer/" + savedProgrammer.getId();
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Erreur lors de la création du programmeur");
             return "redirect:/programmer/new";
@@ -82,7 +82,7 @@ public class ProgrammerController {
     @PostMapping("/{id}/edit")
     public String updateProgrammer(@PathVariable Integer id, @ModelAttribute Programmer programmer, RedirectAttributes redirectAttributes) {
         try {
-            programmer.setIdProgrammeur(id);
+            programmer.setId(id);
             Programmer updatedProgrammer = programmerService.patch(id, programmer);
             if (updatedProgrammer != null) {
                 redirectAttributes.addFlashAttribute("success", "Programmeur modifié avec succès !");

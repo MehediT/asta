@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Programmer")
+@Table(name = "programmer")
 @Data
 @NoArgsConstructor
 public class Programmer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idProgrammeur;
+    private Integer id;
     
     @Column(name = "nom")
     private String nom;
@@ -32,9 +32,9 @@ public class Programmer {
     @Column(name = "salaire")
     private Double salaire;
 
-    public Programmer(Integer idProgrammeur, String nom, String prenom, String adresse, 
+    public Programmer(Integer id, String nom, String prenom, String adresse, 
                      String langageExpertise, String livrePrefere, Double salaire) {
-        this.idProgrammeur = idProgrammeur;
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
@@ -46,7 +46,7 @@ public class Programmer {
     @Override
     public String toString() {
         return "Programmer{" +
-                "idProgrammeur=" + idProgrammeur +
+                "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", adresse='" + adresse + '\'' +

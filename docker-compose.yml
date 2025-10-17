@@ -3,10 +3,10 @@ version: '3.8'
 services:
   db:
     image: mariadb:latest
-    container_name: tp-java
+    container_name: asta
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: Base_ALTN72
+      MYSQL_DATABASE: asta
     ports:
       - '3306:3306'
     restart: always
