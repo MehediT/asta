@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import 'tailwindcss';
+@config "./tailwind.config.ts";
+
+@layer base {
+  body:has(.modal-content),
+  body:has(.offcanvas) {
+    @apply overflow-hidden;
+  }
+
+  input[type='number'].no-arrow::-webkit-inner-spin-button,
+  input[type='number'].no-arrow::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'].no-arrow {
+    -moz-appearance: textfield;
+  }
+}

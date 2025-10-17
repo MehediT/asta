@@ -1,0 +1,12 @@
+{
+  "name": "frontend",
+  "private": true,
+  "scripts": {
+    "build:css": "node_modules/.bin/tailwindcss -i ./main.css -o ../resources/static/main.css --minify",
+    "watch:css": "node_modules/.bin/tailwindcss -i ./main.css -o ../resources/static/main.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.14",
+    "@tailwindcss/cli": "^4.1.14"
+  }
+}
