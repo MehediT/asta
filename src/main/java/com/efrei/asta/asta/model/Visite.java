@@ -31,11 +31,6 @@ public class Visite {
     @JoinColumn(name = "apprenti_id", referencedColumnName = "id")
     private Apprenti apprenti;
 
-    public enum FormatVisite {
-        VISIO,
-        PRESENTIEL
-    }
-
     @Override
     public String toString() {
         return "Visite{" +

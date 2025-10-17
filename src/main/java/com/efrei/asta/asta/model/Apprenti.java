@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
@@ -47,7 +48,7 @@ public class Apprenti {
     private Mission mission;
     
     @OneToMany(mappedBy = "apprenti", cascade = CascadeType.ALL)
-    private java.util.List<Visite> visites;
+    private List<Visite> visites;
     
     @OneToOne(mappedBy = "apprenti", cascade = CascadeType.ALL)
     private Evaluation evaluation;
