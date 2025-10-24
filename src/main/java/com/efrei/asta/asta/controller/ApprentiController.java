@@ -2,54 +2,36 @@ package com.efrei.asta.asta.controller;
 
 import com.efrei.asta.asta.model.*;
 import com.efrei.asta.asta.service.ApprentiService;
-import com.efrei.asta.asta.service.RechercheService;
-import com.efrei.asta.asta.service.AnneeAcademiqueService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
+/**
+ * Contrôleur pour les opérations CRUD sur les apprentis
+ */
 @Controller
+@RequestMapping("/apprenti")
 public class ApprentiController {
     
     private final ApprentiService apprentiService;
-    private final RechercheService rechercheService;
-    private final AnneeAcademiqueService anneeAcademiqueService;
     
-    public ApprentiController(ApprentiService apprentiService,
-                             RechercheService rechercheService,
-                             AnneeAcademiqueService anneeAcademiqueService) {
+    public ApprentiController(ApprentiService apprentiService) {
         this.apprentiService = apprentiService;
-        this.rechercheService = rechercheService;
-        this.anneeAcademiqueService = anneeAcademiqueService;
     }
     
-    // Vérifier si l'utilisateur est connecté
+    /**
+     * Vérifie si l'utilisateur est connecté
+     */
     private boolean isAuthenticated(HttpSession session) {
         return session.getAttribute("tuteurId") != null;
     }
     
-    @GetMapping("/dashboard")
-    public String dashboard(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
-        if (!isAuthenticated(session)) {
-            return "redirect:/login";
-        }
-        
-        Integer tuteurId = (Integer) session.getAttribute("tuteurId");
-        String anneeActuelle = "2023-2024"; // À adapter avec l'année en cours
-        
-        List<Apprenti> apprentis = apprentiService.findByTuteurAndAnneeAcademique(tuteurId, anneeActuelle);
-        
-        model.addAttribute("apprentis", apprentis);
-        model.addAttribute("anneeActuelle", anneeActuelle);
-        
-        return "dashboard";
-    }
-    
-    @GetMapping("/apprenti/{id}")
+    /**
+     * Affiche les détails d'un apprenti
+     */
+    @GetMapping("/{id}")
     public String detailsApprenti(@PathVariable Integer id, HttpSession session, Model model) {
         if (!isAuthenticated(session)) {
             return "redirect:/login";
@@ -61,7 +43,10 @@ public class ApprentiController {
         return "detailsApprenti";
     }
     
-    @GetMapping("/apprenti/nouveau")
+    /**
+     * Affiche le formulaire de création d'un nouvel apprenti
+     */
+    @GetMapping("/nouveau")
     public String nouveauApprentiForm(HttpSession session, Model model) {
         if (!isAuthenticated(session)) {
             return "redirect:/login";
@@ -79,7 +64,10 @@ public class ApprentiController {
         return "nouveauApprenti";
     }
     
-    @PostMapping("/apprenti/nouveau")
+    /**
+     * Crée un nouvel apprenti
+     */
+    @PostMapping("/nouveau")
     public String creerApprenti(@ModelAttribute Apprenti apprenti, 
                                 HttpSession session,
                                 RedirectAttributes redirectAttributes) {
@@ -104,7 +92,10 @@ public class ApprentiController {
         }
     }
     
-    @GetMapping("/apprenti/{id}/modifier")
+    /**
+     * Affiche le formulaire de modification d'un apprenti
+     */
+    @GetMapping("/{id}/modifier")
     public String modifierApprentiForm(@PathVariable Integer id, HttpSession session, Model model) {
         if (!isAuthenticated(session)) {
             return "redirect:/login";
@@ -134,7 +125,10 @@ public class ApprentiController {
         return "modifierApprenti";
     }
     
-    @PostMapping("/apprenti/{id}/modifier")
+    /**
+     * Modifie un apprenti existant
+     */
+    @PostMapping("/{id}/modifier")
     public String modifierApprenti(@PathVariable Integer id,
                                    @ModelAttribute Apprenti apprenti,
                                    HttpSession session,
@@ -153,7 +147,10 @@ public class ApprentiController {
         }
     }
     
-    @PostMapping("/apprenti/{id}/supprimer")
+    /**
+     * Supprime un apprenti
+     */
+    @PostMapping("/{id}/supprimer")
     public String supprimerApprenti(@PathVariable Integer id,
                                     HttpSession session,
                                     RedirectAttributes redirectAttributes) {
@@ -170,61 +167,4 @@ public class ApprentiController {
         
         return "redirect:/dashboard";
     }
-    
-    @GetMapping("/recherche")
-    public String rechercheForm(HttpSession session, Model model) {
-        if (!isAuthenticated(session)) {
-            return "redirect:/login";
-        }
-        
-        return "recherche";
-    }
-    
-    @PostMapping("/recherche")
-    public String recherche(@RequestParam String critere,
-                           @RequestParam String valeur,
-                           HttpSession session,
-                           Model model) {
-        if (!isAuthenticated(session)) {
-            return "redirect:/login";
-        }
-        
-        List<Apprenti> resultats = rechercheService.rechercher(critere, valeur);
-        
-        model.addAttribute("resultats", resultats);
-        model.addAttribute("critere", critere);
-        model.addAttribute("valeur", valeur);
-        
-        return "recherche";
-    }
-    
-    @GetMapping("/nouvelle-annee")
-    public String nouvelleAnneeForm(HttpSession session, Model model) {
-        if (!isAuthenticated(session)) {
-            return "redirect:/login";
-        }
-        
-        return "nouvelleAnnee";
-    }
-    
-    @PostMapping("/nouvelle-annee")
-    public String creerNouvelleAnnee(@RequestParam String nouvelleAnnee,
-                                     HttpSession session,
-                                     RedirectAttributes redirectAttributes) {
-        if (!isAuthenticated(session)) {
-            return "redirect:/login";
-        }
-        
-        try {
-            anneeAcademiqueService.creerNouvelleAnneeAcademique(nouvelleAnnee);
-            redirectAttributes.addFlashAttribute("success", 
-                "Nouvelle année académique créée ! Les apprentis I3 ont été archivés et les autres ont été promus.");
-            return "redirect:/dashboard";
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", 
-                "Erreur lors de la création de la nouvelle année : " + e.getMessage());
-            return "redirect:/nouvelle-annee";
-        }
-    }
 }
-
