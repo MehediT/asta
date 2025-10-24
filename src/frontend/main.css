@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Import de la police Inter depuis Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Styles de base */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Animation pour les messages flash */
+.animate-rmehe {
+  animation: Rmehe 0.3s ease 0.5s 1 normal both;
+}
+
+@keyframes Rmehe {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

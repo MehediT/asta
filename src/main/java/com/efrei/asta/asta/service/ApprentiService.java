@@ -14,9 +14,24 @@ import java.util.Optional;
 public class ApprentiService {
     
     private final ApprentiRepository apprentiRepository;
+    private final EntrepriseService entrepriseService;
+    private final MaitreApprentissageService maitreApprentissageService;
+    private final MissionService missionService;
+    private final VisiteService visiteService;
+    private final EvaluationService evaluationService;
     
-    public ApprentiService(ApprentiRepository apprentiRepository) {
+    public ApprentiService(ApprentiRepository apprentiRepository,
+                          EntrepriseService entrepriseService,
+                          MaitreApprentissageService maitreApprentissageService,
+                          MissionService missionService,
+                          VisiteService visiteService,
+                          EvaluationService evaluationService) {
         this.apprentiRepository = apprentiRepository;
+        this.entrepriseService = entrepriseService;
+        this.maitreApprentissageService = maitreApprentissageService;
+        this.missionService = missionService;
+        this.visiteService = visiteService;
+        this.evaluationService = evaluationService;
     }
     
     public List<Apprenti> findAll() {
@@ -43,6 +58,14 @@ public class ApprentiService {
     @Transactional
     public Apprenti save(Apprenti apprenti) {
         validerApprenti(apprenti);
+        
+        // Valider les entités liées
+        entrepriseService.validerEntreprise(apprenti.getEntreprise());
+        maitreApprentissageService.validerMaitreApprentissage(apprenti.getMaitreApprentissage());
+        missionService.validerMission(apprenti.getMission());
+        visiteService.validerVisite(apprenti.getVisite());
+        evaluationService.validerEvaluation(apprenti.getEvaluation());
+        
         return apprentiRepository.save(apprenti);
     }
     
@@ -51,6 +74,13 @@ public class ApprentiService {
         Apprenti apprentiExistant = findByIdOrThrow(id);
         
         validerApprenti(apprentiModifie);
+        
+        // Valider les entités liées
+        entrepriseService.validerEntreprise(apprentiModifie.getEntreprise());
+        maitreApprentissageService.validerMaitreApprentissage(apprentiModifie.getMaitreApprentissage());
+        missionService.validerMission(apprentiModifie.getMission());
+        visiteService.validerVisite(apprentiModifie.getVisite());
+        evaluationService.validerEvaluation(apprentiModifie.getEvaluation());
         
         // Mise à jour des champs
         apprentiExistant.setProgramme(apprentiModifie.getProgramme());
@@ -77,48 +107,6 @@ public class ApprentiService {
     public void delete(Integer id) {
         Apprenti apprenti = findByIdOrThrow(id);
         apprentiRepository.delete(apprenti);
-    }
-    
-    // Méthodes de recherche
-    public List<Apprenti> rechercherParNom(String nom) {
-        return apprentiRepository.rechercherParNom(nom);
-    }
-    
-    public List<Apprenti> rechercherParEntreprise(String entreprise) {
-        return apprentiRepository.rechercherParEntreprise(entreprise);
-    }
-    
-    public List<Apprenti> rechercherParMotCleMission(String motCle) {
-        return apprentiRepository.rechercherParMotCleMission(motCle);
-    }
-    
-    public List<Apprenti> rechercherParAnneeAcademique(String anneeAcademique) {
-        return apprentiRepository.rechercherParAnneeAcademique(anneeAcademique);
-    }
-    
-    // Gestion de la nouvelle année académique
-    @Transactional
-    public void creerNouvelleAnneeAcademique(String nouvelleAnnee) {
-        List<Apprenti> tousLesApprentis = apprentiRepository.findByArchiveFalse();
-        
-        for (Apprenti apprenti : tousLesApprentis) {
-            String niveauActuel = apprenti.getNiveau();
-            
-            if ("I3".equalsIgnoreCase(niveauActuel)) {
-                // Archiver les I3
-                apprenti.setArchive(true);
-            } else if ("I2".equalsIgnoreCase(niveauActuel)) {
-                // Promouvoir I2 vers I3
-                apprenti.setNiveau("I3");
-                apprenti.setAnneeAcademique(nouvelleAnnee);
-            } else if ("I1".equalsIgnoreCase(niveauActuel)) {
-                // Promouvoir I1 vers I2
-                apprenti.setNiveau("I2");
-                apprenti.setAnneeAcademique(nouvelleAnnee);
-            }
-            
-            apprentiRepository.save(apprenti);
-        }
     }
     
     private void validerApprenti(Apprenti apprenti) {
@@ -156,10 +144,6 @@ public class ApprentiService {
         if (hasError) {
             throw exception;
         }
-    }
-    
-    public Integer compterApprentisPourNiveau(String niveau) {
-        return apprentiRepository.compterApprentisPourNiveau(niveau);
     }
 }
 

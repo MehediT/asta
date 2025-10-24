@@ -7,16 +7,14 @@
     <link rel="stylesheet" href="/main.css" />
   </head>
   <body
-    class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen flex items-center justify-center p-4"
+    class="bg-light min-h-screen flex items-center justify-center p-4 font-inter"
   >
     <div class="w-full max-w-md">
       <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
         <!-- Header -->
-        <div
-          class="bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-10 text-center"
-        >
+        <div class="bg-success-200 px-8 py-10 text-center">
           <h1 class="text-4xl font-bold text-white mb-2">ASTA</h1>
-          <p class="text-indigo-100 text-sm">
+          <p class="text-white/90 text-sm">
             Application de Suivi de Tutorats d'Apprentis
           </p>
         </div>
@@ -26,7 +24,7 @@
           <!-- Messages d'alerte -->
           <div
             th:if="${error}"
-            class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg"
+            class="mb-6 bg-error-50 border border-error-200 text-error-700 px-4 py-3 rounded-lg animate-rmehe"
           >
             <div class="flex">
               <svg
@@ -46,7 +44,7 @@
 
           <div
             th:if="${message}"
-            class="mb-6 bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg"
+            class="mb-6 bg-success-50 border border-success-200 text-success-300 px-4 py-3 rounded-lg animate-rmehe"
           >
             <div class="flex">
               <svg
@@ -79,7 +77,7 @@
                 th:value="${login}"
                 required
                 autofocus
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-light focus:ring-2 focus:ring-success-200 focus:border-success-200 transition-colors duration-200"
                 placeholder="Entrez votre login"
               />
             </div>
@@ -96,14 +94,14 @@
                 id="motDePasse"
                 name="motDePasse"
                 required
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-light focus:ring-2 focus:ring-success-200 focus:border-success-200 transition-colors duration-200"
                 placeholder="Entrez votre mot de passe"
               />
             </div>
 
             <button
               type="submit"
-              class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg"
+              class="w-full bg-success-200 hover:bg-success-300 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-medium hover:shadow-high"
             >
               Se connecter
             </button>

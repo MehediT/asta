@@ -2,6 +2,8 @@ package com.efrei.asta.asta.controller;
 
 import com.efrei.asta.asta.model.*;
 import com.efrei.asta.asta.service.ApprentiService;
+import com.efrei.asta.asta.service.RechercheService;
+import com.efrei.asta.asta.service.AnneeAcademiqueService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +16,15 @@ import java.util.List;
 public class ApprentiController {
     
     private final ApprentiService apprentiService;
+    private final RechercheService rechercheService;
+    private final AnneeAcademiqueService anneeAcademiqueService;
     
-    public ApprentiController(ApprentiService apprentiService) {
+    public ApprentiController(ApprentiService apprentiService,
+                             RechercheService rechercheService,
+                             AnneeAcademiqueService anneeAcademiqueService) {
         this.apprentiService = apprentiService;
+        this.rechercheService = rechercheService;
+        this.anneeAcademiqueService = anneeAcademiqueService;
     }
     
     // Vérifier si l'utilisateur est connecté
@@ -181,24 +189,7 @@ public class ApprentiController {
             return "redirect:/login";
         }
         
-        List<Apprenti> resultats = null;
-        
-        switch (critere) {
-            case "nom":
-                resultats = apprentiService.rechercherParNom(valeur);
-                break;
-            case "entreprise":
-                resultats = apprentiService.rechercherParEntreprise(valeur);
-                break;
-            case "motCle":
-                resultats = apprentiService.rechercherParMotCleMission(valeur);
-                break;
-            case "anneeAcademique":
-                resultats = apprentiService.rechercherParAnneeAcademique(valeur);
-                break;
-            default:
-                resultats = List.of();
-        }
+        List<Apprenti> resultats = rechercheService.rechercher(critere, valeur);
         
         model.addAttribute("resultats", resultats);
         model.addAttribute("critere", critere);
@@ -225,7 +216,7 @@ public class ApprentiController {
         }
         
         try {
-            apprentiService.creerNouvelleAnneeAcademique(nouvelleAnnee);
+            anneeAcademiqueService.creerNouvelleAnneeAcademique(nouvelleAnnee);
             redirectAttributes.addFlashAttribute("success", 
                 "Nouvelle année académique créée ! Les apprentis I3 ont été archivés et les autres ont été promus.");
             return "redirect:/dashboard";

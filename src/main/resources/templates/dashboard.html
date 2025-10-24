@@ -6,7 +6,7 @@
     <title>Tableau de Bord - ASTA</title>
     <link rel="stylesheet" href="/main.css" />
   </head>
-  <body class="bg-gray-50 min-h-screen flex flex-col">
+  <body class="bg-light min-h-screen flex flex-col font-inter">
     <!-- Header -->
     <header class="bg-white shadow-sm border-b border-gray-200">
       <div class="container mx-auto">
@@ -45,7 +45,7 @@
         <div class="flex space-x-4 py-3">
           <a
             href="/dashboard"
-            class="px-4 py-2 text-indigo-600 bg-indigo-50 font-medium rounded-lg"
+            class="px-4 py-2 text-success-300 bg-success-50 font-medium rounded-lg"
           >
             Apprentis
           </a>
@@ -63,7 +63,7 @@
           </a>
           <a
             href="/apprenti/nouveau"
-            class="ml-auto inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
+            class="ml-auto inline-flex items-center px-4 py-2 bg-success-200 hover:bg-success-300 text-white font-medium rounded-lg transition-colors duration-200 shadow-light hover:shadow-medium"
           >
             <svg
               class="w-5 h-5 mr-2"
@@ -89,7 +89,7 @@
       <!-- Messages d'alerte -->
       <div
         th:if="${success}"
-        class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg"
+        class="mb-6 bg-success-50 border border-success-200 text-success-300 px-4 py-3 rounded-lg shadow-light animate-rmehe"
       >
         <div class="flex">
           <svg
@@ -109,7 +109,7 @@
 
       <div
         th:if="${error}"
-        class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg"
+        class="mb-6 bg-error-50 border border-error-200 text-error-700 px-4 py-3 rounded-lg shadow-light animate-rmehe"
       >
         <div class="flex">
           <svg
@@ -133,10 +133,10 @@
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div
-                class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center"
+                class="w-8 h-8 bg-success-50 rounded-lg flex items-center justify-center"
               >
                 <svg
-                  class="w-5 h-5 text-blue-600"
+                  class="w-5 h-5 text-success-200"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -261,10 +261,10 @@
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
                       <div
-                        class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center"
+                        class="h-10 w-10 rounded-full bg-success-50 flex items-center justify-center"
                       >
                         <span
-                          class="text-sm font-medium text-indigo-600"
+                          class="text-sm font-medium text-success-200"
                           th:text="${#strings.substring(apprenti.prenom, 0, 1) + #strings.substring(apprenti.nom, 0, 1)}"
                         >
                         </span>
@@ -340,7 +340,7 @@
                     </a>
                     <a
                       th:href="@{/apprenti/{id}/modifier(id=${apprenti.id})}"
-                      class="text-indigo-600 hover:text-indigo-900 transition-colors duration-150"
+                      class="text-success-200 hover:text-success-300 transition-colors duration-150"
                       title="Modifier"
                     >
                       <svg
