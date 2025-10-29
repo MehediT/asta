@@ -68,7 +68,7 @@
                 for="login"
                 class="block text-sm font-medium text-gray-700 mb-2"
               >
-                Login
+                Login <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -87,7 +87,7 @@
                 for="motDePasse"
                 class="block text-sm font-medium text-gray-700 mb-2"
               >
-                Mot de passe
+                Mot de passe <span class="text-red-500">*</span>
               </label>
               <input
                 type="password"
@@ -99,6 +99,9 @@
               />
             </div>
 
+            <p class="text-sm text-gray-500">
+              <span class="text-red-500">*</span> Champs obligatoires
+            </p>
             <button
               type="submit"
               class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200"
