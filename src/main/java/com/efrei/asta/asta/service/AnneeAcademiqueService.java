@@ -17,17 +17,13 @@ public class AnneeAcademiqueService {
     }
     
     /**
-     * Crée une nouvelle année académique en :
-     * - Archivant les apprentis de niveau I3
-     * - Promouvant les I2 vers I3
-     * - Promouvant les I1 vers I2
-     * 
-     * Cette méthode utilise une requête SQL native pour effectuer la promotion en masse,
-     * conformément à l'exigence du projet d'utiliser au moins une requête SQL standard.
+     * Crée une nouvelle année académique :
+     * - Archive les I3
+     * - Promeut I2 → I3
+     * - Promeut I1 → I2
      */
     @Transactional
     public void creerNouvelleAnneeAcademique(String nouvelleAnnee) {
-        // Récupérer tous les apprentis non archivés
         List<Apprenti> tousLesApprentis = apprentiRepository.findByArchiveFalse();
         
         for (Apprenti apprenti : tousLesApprentis) {
@@ -50,16 +46,10 @@ public class AnneeAcademiqueService {
         }
     }
     
-    /**
-     * Récupère le nombre d'apprentis pour un niveau donné
-     */
     public Integer compterApprentisPourNiveau(String niveau) {
         return apprentiRepository.compterApprentisPourNiveau(niveau);
     }
     
-    /**
-     * Récupère tous les apprentis pour une année académique donnée
-     */
     public List<Apprenti> getApprentisParAnnee(String anneeAcademique) {
         return apprentiRepository.rechercherParAnneeAcademique(anneeAcademique);
     }
