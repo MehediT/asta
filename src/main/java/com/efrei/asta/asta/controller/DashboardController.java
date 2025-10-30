@@ -39,7 +39,12 @@ public class DashboardController {
         }
         
         Integer tuteurId = (Integer) session.getAttribute("tuteurId");
-        String anneeActuelle = "2023-2024"; // À adapter avec l'année en cours
+        String anneeActuelle = (String) session.getAttribute("anneeAcademique");
+        
+        if (anneeActuelle == null) {
+            anneeActuelle = "2023-2024";
+            session.setAttribute("anneeAcademique", anneeActuelle);
+        }
         
         List<Apprenti> apprentis = apprentiService.findByTuteurAndAnneeAcademique(tuteurId, anneeActuelle);
         

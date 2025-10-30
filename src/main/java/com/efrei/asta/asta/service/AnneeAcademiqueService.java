@@ -30,15 +30,15 @@ public class AnneeAcademiqueService {
             String niveauActuel = apprenti.getNiveau();
             
             if ("I3".equalsIgnoreCase(niveauActuel)) {
-                // Archiver les I3
                 apprenti.setArchive(true);
             } else if ("I2".equalsIgnoreCase(niveauActuel)) {
-                // Promouvoir I2 vers I3
                 apprenti.setNiveau("I3");
-                apprenti.setAnneeAcademique(nouvelleAnnee);
             } else if ("I1".equalsIgnoreCase(niveauActuel)) {
-                // Promouvoir I1 vers I2
                 apprenti.setNiveau("I2");
+            }
+            
+            // Mettre à jour l'année académique pour TOUS les apprentis non archivés
+            if (!apprenti.getArchive()) {
                 apprenti.setAnneeAcademique(nouvelleAnnee);
             }
             

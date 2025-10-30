@@ -55,6 +55,7 @@ public class AnneeAcademiqueController {
         
         try {
             anneeAcademiqueService.creerNouvelleAnneeAcademique(nouvelleAnnee);
+            session.setAttribute("anneeAcademique", nouvelleAnnee);
             redirectAttributes.addFlashAttribute("success", 
                 "Nouvelle année académique créée ! Les apprentis I3 ont été archivés et les autres ont été promus.");
             return "redirect:/dashboard";
